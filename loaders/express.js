@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 
+const apiRouter = require('../api');
+const config = require('../config');
+
 module.exports = (app) => {
     /**
      * Health-check endpoints.
@@ -11,6 +14,8 @@ module.exports = (app) => {
     app.head('/status', (req, res) => {
         res.status(200).end();
     });
+
+    app.use(config.api.prefix, apiRouter);
 
     app.use(cors());
     app.use(express.json());
