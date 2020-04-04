@@ -1,30 +1,64 @@
+const { CastError } = require('mongoose');
+
 class Restaurants {
     constructor({ db, services }) {
         this.db = db;
         this.services = services;
     }
 
-    // mock functions, no database use
+    async getSome(tags) {
+        try {
+            const restaurants = await this.db.Restaurant.findByTags(
+                tags,
+            );
 
-    // eslint-disable-next-line no-unused-vars
-    async getSome(criteria) {
-        return {
-            success: true,
-            data: Array(10).fill((await this.getOne(1)).data),
-        };
+            return {
+                success: true,
+                data: restaurants,
+            };
+        } catch (error) {
+            return {
+                success: false,
+                error: {
+                    message: error.message,
+                },
+            };
+        }
     }
 
     async getOne(id) {
-        return {
-            success: true,
-            data: {
-                id,
-                name: 'Il Ristorante',
-                description:
-                    'The most generic restaurant of all time!',
-                tags: ['generic', 'fast-food', 'pizza'],
-            },
-        };
+        try {
+            const restaurant = await this.db.Restaurant.findById(id);
+
+            if (restaurant) {
+                return {
+                    success: true,
+                    data: restaurant,
+                };
+            }
+            return {
+                success: false,
+                error: {
+                    message: 'Restaurant not found.',
+                },
+            };
+        } catch (error) {
+            if (error instanceof CastError) {
+                return {
+                    success: false,
+                    error: {
+                        message: 'CastError: ID not valid.',
+                        reason: error.reason.message,
+                    },
+                };
+            }
+            return {
+                success: false,
+                error: {
+                    message: error.message,
+                },
+            };
+        }
     }
 }
 

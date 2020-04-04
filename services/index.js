@@ -1,7 +1,10 @@
 const RestaurantsService = require('./Restaurants');
+const { Restaurant } = require('../models');
 
 const restaurants = new RestaurantsService({
-    db: null,
+    db: {
+        Restaurant,
+    },
     services: {},
 });
 

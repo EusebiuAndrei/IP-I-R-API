@@ -10,4 +10,7 @@ module.exports = {
     api: {
         prefix: '/api',
     },
+    database: {
+        URL: process.env.DB_CONNECTION,
+    },
 };

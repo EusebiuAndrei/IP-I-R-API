@@ -15,8 +15,7 @@ module.exports = (app) => {
         res.status(200).end();
     });
 
-    app.use(config.api.prefix, apiRouter);
-
     app.use(cors());
     app.use(express.json());
+    app.use(config.api.prefix, apiRouter);
 };
