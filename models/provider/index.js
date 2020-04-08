@@ -5,6 +5,6 @@ const statics = require('./statics');
 
 Object.assign(schema.statics, statics);
 
-const Restaurant = mongoose.model('Restaurant', schema);
+const Provider = mongoose.model('Provider', schema);
 
-module.exports = Restaurant;
+module.exports = Provider;

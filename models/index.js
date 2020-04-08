@@ -1,7 +1,7 @@
-const Restaurant = require('./restaurant');
-const restaurantValidationSchema = require('./restaurant/validator');
+const Provider = require('./provider');
+const providerValidationSchema = require('./provider/validator');
 
 module.exports = {
-    Restaurant,
-    restaurantValidationSchema,
+    Provider,
+    providerValidationSchema,
 };

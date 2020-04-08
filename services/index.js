@@ -1,13 +1,12 @@
-const RestaurantsService = require('./Restaurants');
-const { Restaurant } = require('../models');
+const ProvidersService = require('./Providers');
+const { Provider } = require('../models');
 
-const restaurants = new RestaurantsService({
+const providers = new ProvidersService({
     db: {
-        Restaurant,
+        Provider,
     },
-    services: {},
 });
 
 module.exports = {
-    restaurants,
+    providers,
 };

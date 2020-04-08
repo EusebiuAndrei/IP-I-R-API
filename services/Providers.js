@@ -1,20 +1,17 @@
 const { CastError } = require('mongoose');
 
-class Restaurants {
-    constructor({ db, services }) {
+class Providers {
+    constructor({ db }) {
         this.db = db;
-        this.services = services;
     }
 
     async getSome(tags) {
         try {
-            const restaurants = await this.db.Restaurant.findByTags(
-                tags,
-            );
+            const providers = await this.db.Provider.findByTags(tags);
 
             return {
                 success: true,
-                data: restaurants,
+                data: providers,
             };
         } catch (error) {
             return {
@@ -28,18 +25,18 @@ class Restaurants {
 
     async getOne(id) {
         try {
-            const restaurant = await this.db.Restaurant.findById(id);
+            const provider = await this.db.Provider.findById(id);
 
-            if (restaurant) {
+            if (provider) {
                 return {
                     success: true,
-                    data: restaurant,
+                    data: provider,
                 };
             }
             return {
                 success: false,
                 error: {
-                    message: 'Restaurant not found.',
+                    message: 'Provider not found.',
                 },
             };
         } catch (error) {
@@ -62,4 +59,4 @@ class Restaurants {
     }
 }
 
-module.exports = Restaurants;
+module.exports = Providers;
