@@ -6,16 +6,6 @@ const schema = mongoose.Schema({
         required: true,
         minLength: 1,
     },
-    description: {
-        type: String,
-        minLength: 1,
-    },
-    tags: [
-        {
-            type: String,
-            minLength: 1,
-        },
-    ],
 });
 
 module.exports = schema;

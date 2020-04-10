@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
+const { Provider, User } = require('.');
 
 const schema = mongoose.Schema({
     provider: {
         type: mongoose.ObjectId,
+        ref: Provider,
         required: true,
     },
     reviewer: {
         type: mongoose.ObjectId,
+        ref: User,
         required: true,
     },
     score: {
@@ -21,11 +24,11 @@ const schema = mongoose.Schema({
         minLength: 1,
         maxLength: 1000, // arbitrary, up for change
     },
-    time_created: {
+    timeCreated: {
         type: Date,
         required: true,
     },
-    time_modified: {
+    timeModified: {
         type: Date,
         required: true,
     },
