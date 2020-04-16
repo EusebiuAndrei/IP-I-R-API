@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { ObjectId } = mongoose.types;
+const { ObjectId } = mongoose.Types;
 
 const getProviderScore = async function (providerId) {
     const result = await this.aggregate()

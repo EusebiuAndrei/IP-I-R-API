@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongoose').types;
+const { ObjectId } = require('mongoose').Types;
 const { CastError } = require('mongoose');
 
 const { responseBuilder } = require('../util/responseUtil');
@@ -10,15 +10,15 @@ class Reviews {
 
     async getForProvider(providerId) {
         try {
-            const dbReviews = await this.db.Review.statics.getProviderReviews(
+            const dbReviews = await this.db.Review.getProviderReviews(
                 providerId,
             );
 
-            const reviews = dbReviews.map((review) =>
-                review.getObject(),
+            const reviews = await Promise.all(
+                dbReviews.map(async (review) => review.getObject()),
             );
 
-            if (reviews) {
+            if (reviews.length) {
                 const score =
                     reviews.reduce(
                         (accumulator, review) =>
@@ -52,7 +52,7 @@ class Reviews {
             score: review.score,
             description: review.description,
             timeCreated: new Date(),
-            timeUpdated: new Date(),
+            timeModified: new Date(),
         };
 
         try {

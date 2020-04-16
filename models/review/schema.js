@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { Provider, User } = require('.');
+const Provider = require('../provider');
+const User = require('../user');
 
 const schema = mongoose.Schema({
     provider: {

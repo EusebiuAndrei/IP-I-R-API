@@ -1,5 +1,6 @@
 const ProvidersService = require('./Providers');
-const { Provider } = require('../models');
+const ReviewsService = require('./Reviews');
+const { Provider, Review } = require('../models');
 
 const providers = new ProvidersService({
     db: {
@@ -7,6 +8,13 @@ const providers = new ProvidersService({
     },
 });
 
+const reviews = new ReviewsService({
+    db: {
+        Review,
+    },
+});
+
 module.exports = {
     providers,
+    reviews,
 };

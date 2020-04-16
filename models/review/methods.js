@@ -4,6 +4,7 @@ const getObject = async function () {
     const reviewObject = this.toObject();
 
     delete reviewObject.provider;
+    reviewObject.reviewer = reviewObject.reviewer.name;
     return reviewObject;
 };
 
