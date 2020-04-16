@@ -1,4 +1,5 @@
 const { CastError } = require('mongoose');
+const { responseBuilder } = require('../util/responseUtil');
 
 class Providers {
     constructor({ db }) {
@@ -8,53 +9,29 @@ class Providers {
     async getSome(tags) {
         try {
             const providers = await this.db.Provider.findByTags(tags);
-
-            return {
-                success: true,
-                data: providers,
-            };
+            return responseBuilder(true, providers);
         } catch (error) {
-            return {
-                success: false,
-                error: {
-                    message: error.message,
-                },
-            };
+            return responseBuilder(false, { message: error.message });
         }
     }
 
     async getOne(id) {
         try {
             const provider = await this.db.Provider.findById(id);
-
             if (provider) {
-                return {
-                    success: true,
-                    data: provider,
-                };
+                return responseBuilder(true, provider);
             }
-            return {
-                success: false,
-                error: {
-                    message: 'Provider not found.',
-                },
-            };
+            return responseBuilder(false, {
+                message: 'Provider not found.',
+            });
         } catch (error) {
             if (error instanceof CastError) {
-                return {
-                    success: false,
-                    error: {
-                        message: 'CastError: ID not valid.',
-                        reason: error.reason.message,
-                    },
-                };
+                return responseBuilder(false, {
+                    message: 'CastError: ID not valid.',
+                    reason: error.reason.message,
+                });
             }
-            return {
-                success: false,
-                error: {
-                    message: error.message,
-                },
-            };
+            return responseBuilder(false, { message: error.message });
         }
     }
 }
