@@ -51,6 +51,31 @@ router.post(
     async (req, res) => {
         const review = req.body;
         const result = await reviews.post(review);
+        const statusCode = result.success ? 201 : 400;
+
+        res.status(statusCode).json(result);
+    },
+);
+
+/**
+ * Update a posted review, whose ID is given in the URL.
+ * Review schema detailed in /models/review/validator.
+ *
+ * Response data on success is empty object.
+ */
+router.put(
+    '/:id',
+    celebrate({
+        body: reviewValidationSchema,
+        params: Joi.object().keys({
+            id: objectIdSchema,
+        }),
+    }),
+    async (req, res) => {
+        const review = req.body;
+        const { id } = req.params;
+        const result = await reviews.put(id, review);
+
         const statusCode = result.success ? 200 : 400;
 
         res.status(statusCode).json(result);

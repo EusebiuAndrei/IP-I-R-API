@@ -59,6 +59,34 @@ class Reviews {
             throw error;
         }
     }
+
+    async put(id, review) {
+        const originalDbReview = await this.db.Review.findById(id);
+
+        if (!originalDbReview) {
+            return responseBuilder(false, {
+                message:
+                    'Original review does not exist, cannot edit.',
+            });
+        }
+        const originalReview = originalDbReview.toObject();
+        if (
+            originalReview.provider.toString() !==
+                review.providerId ||
+            originalReview.reviewer.toString() !== review.reviewerId
+        ) {
+            return responseBuilder(false, {
+                message: 'Cannot change review provider or reviewer.',
+            });
+        }
+
+        originalDbReview.description = review.description;
+        originalDbReview.score = review.score;
+        originalDbReview.timeModified = new Date();
+        originalDbReview.save();
+
+        return responseBuilder(true, {});
+    }
 }
 
 module.exports = Reviews;
