@@ -1,7 +1,11 @@
 const Provider = require('./provider');
-const providerValidationSchema = require('./provider/validator');
+const Review = require('./review');
+const reviewValidator = require('./review/validator');
+const User = require('./user');
 
 module.exports = {
     Provider,
-    providerValidationSchema,
+    Review,
+    reviewValidator,
+    User,
 };

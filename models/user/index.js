@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const schema = require('./schema');
 
-const Provider = mongoose.model('Provider', schema);
+const User = mongoose.model('User', schema);
 
-module.exports = Provider;
+module.exports = User;
