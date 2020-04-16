@@ -43,11 +43,21 @@ class Reviews {
             timeModified: new Date(),
         };
 
-        const result = await this.db.Review.create(dbReviewBody);
-
-        return responseBuilder(true, {
-            id: result.id,
-        });
+        try {
+            const result = await this.db.Review.create(dbReviewBody);
+            return responseBuilder(true, {
+                id: result.id,
+            });
+        } catch (error) {
+            if (error.name === 'MongoError' && error.code === 11000) {
+                // duplicate key error
+                return responseBuilder(false, {
+                    message:
+                        'Only one review per reviewer per provider is allowed.',
+                });
+            }
+            throw error;
+        }
     }
 }
 

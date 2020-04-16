@@ -51,7 +51,9 @@ router.post(
     async (req, res) => {
         const review = req.body;
         const result = await reviews.post(review);
-        res.status(200).json(result);
+        const statusCode = result.success ? 200 : 400;
+
+        res.status(statusCode).json(result);
     },
 );
 

@@ -7,11 +7,13 @@ const schema = mongoose.Schema({
         type: mongoose.ObjectId,
         ref: Provider,
         required: true,
+        unique: false,
     },
     reviewer: {
         type: mongoose.ObjectId,
         ref: User,
         required: true,
+        unique: false,
     },
     score: {
         // k score -> k/2 stars
@@ -34,5 +36,7 @@ const schema = mongoose.Schema({
         required: true,
     },
 });
+
+schema.index({ provider: 1, reviewer: 1 }, { unique: true });
 
 module.exports = schema;
