@@ -1,5 +1,7 @@
 const { Router } = require('express');
+const { celebrate, Joi } = require('celebrate');
 const { providers } = require('../../services');
+const { objectIdSchema } = require('../../schemas');
 
 const router = Router();
 
@@ -20,12 +22,20 @@ router.get('/', async (req, res) => {
 /**
  * Get the provider with the given ID.
  */
-router.get('/:id', async (req, res) => {
-    const { id } = req.params;
-    const result = await providers.getOne(id);
-    const statusCode = result.success ? 200 : 404;
+router.get(
+    '/:id',
+    celebrate({
+        params: Joi.object().keys({
+            id: objectIdSchema,
+        }),
+    }),
+    async (req, res) => {
+        const { id } = req.params;
+        const result = await providers.getOne(id);
+        const statusCode = result.success ? 200 : 404;
 
-    res.status(statusCode).json(result);
-});
+        res.status(statusCode).json(result);
+    },
+);
 
 module.exports = router;

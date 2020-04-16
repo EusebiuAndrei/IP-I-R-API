@@ -1,8 +1,9 @@
 const { Router } = require('express');
-const { celebrate } = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 
 const { reviews } = require('../../services');
 const { reviewValidationSchema } = require('../../models');
+const { objectIdSchema } = require('../../schemas');
 
 const router = Router();
 
@@ -17,14 +18,22 @@ const router = Router();
  *     ]
  * }
  */
-router.get('/', async (req, res) => {
-    const { providerId } = req.body;
+router.get(
+    '/',
+    celebrate({
+        body: Joi.object().keys({
+            providerId: objectIdSchema,
+        }),
+    }),
+    async (req, res) => {
+        const { providerId } = req.body;
 
-    const result = await reviews.getForProvider(providerId);
-    const statusCode = result.success ? 200 : 404;
+        const result = await reviews.getForProvider(providerId);
+        const statusCode = result.success ? 200 : 404;
 
-    res.status(statusCode).json(result);
-});
+        res.status(statusCode).json(result);
+    },
+);
 
 router.post(
     '/',
