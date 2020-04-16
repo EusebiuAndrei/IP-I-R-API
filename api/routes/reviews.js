@@ -35,6 +35,14 @@ router.get(
     },
 );
 
+/**
+ * Post a review; review schema detailed in /models/review/validator.
+ *
+ * Response data format:
+ * {
+ *      id: ...
+ * }
+ */
 router.post(
     '/',
     celebrate({
@@ -43,9 +51,7 @@ router.post(
     async (req, res) => {
         const review = req.body;
         const result = await reviews.post(review);
-        const statusCode = result.success ? 200 : 500;
-
-        res.status(statusCode).json(result);
+        res.status(200).json(result);
     },
 );
 

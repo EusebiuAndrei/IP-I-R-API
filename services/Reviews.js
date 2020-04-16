@@ -1,5 +1,4 @@
 const { ObjectId } = require('mongoose').Types;
-const { CastError } = require('mongoose');
 
 const { responseBuilder } = require('../util/responseUtil');
 
@@ -9,40 +8,29 @@ class Reviews {
     }
 
     async getForProvider(providerId) {
-        try {
-            const dbReviews = await this.db.Review.getProviderReviews(
-                providerId,
-            );
+        const dbReviews = await this.db.Review.getProviderReviews(
+            providerId,
+        );
 
-            const reviews = await Promise.all(
-                dbReviews.map(async (review) => review.getObject()),
-            );
+        const reviews = await Promise.all(
+            dbReviews.map(async (review) => review.getObject()),
+        );
 
-            if (reviews.length) {
-                const score =
-                    reviews.reduce(
-                        (accumulator, review) =>
-                            accumulator + review.score,
-                    ) / reviews.length;
+        if (reviews.length) {
+            const score =
+                reviews.reduce(
+                    (accumulator, review) =>
+                        accumulator + review.score,
+                ) / reviews.length;
 
-                return responseBuilder(true, {
-                    score,
-                    reviews,
-                });
-            }
-            return responseBuilder(false, {
-                message:
-                    'No reviews found for the given provider ID.',
+            return responseBuilder(true, {
+                score,
+                reviews,
             });
-        } catch (error) {
-            if (error instanceof CastError) {
-                return responseBuilder(false, {
-                    message: 'CastError: ID not valid.',
-                    reason: error.reason.message,
-                });
-            }
-            return responseBuilder(false, { message: error.message });
         }
+        return responseBuilder(false, {
+            message: 'No reviews found for the given provider ID.',
+        });
     }
 
     async post(review) {
@@ -55,17 +43,11 @@ class Reviews {
             timeModified: new Date(),
         };
 
-        try {
-            const result = await this.db.Review.create(dbReviewBody);
+        const result = await this.db.Review.create(dbReviewBody);
 
-            return responseBuilder(true, {
-                id: result.id,
-            });
-        } catch (error) {
-            return responseBuilder(false, {
-                message: error.message,
-            });
-        }
+        return responseBuilder(true, {
+            id: result.id,
+        });
     }
 }
 

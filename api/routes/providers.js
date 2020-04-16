@@ -14,9 +14,7 @@ const router = Router();
 router.get('/', async (req, res) => {
     const tags = req.body ? req.body : [];
     const result = await providers.getSome(tags);
-    const statusCode = result.success ? 200 : 400;
-
-    res.status(statusCode).json(result);
+    res.status(200).json(result);
 });
 
 /**
