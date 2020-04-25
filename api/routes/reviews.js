@@ -24,12 +24,12 @@ const router = Router();
 router.get(
     '/',
     celebrate({
-        body: Joi.object().keys({
-            providerId: objectIdSchema,
-        }),
+        query: {
+            providerId: objectIdSchema.required(),
+        },
     }),
     async (req, res) => {
-        const { providerId } = req.body;
+        const { providerId } = req.query;
 
         const result = await reviews.getForProvider(providerId);
         const statusCode = result.success ? 200 : 404;
@@ -85,6 +85,14 @@ router.put(
     },
 );
 
+/**
+ * Patch a posted review's helpfulness score, creating it if it's currently zero, and incrementing/decrementing it by delta.
+ *
+ * Request body format:
+ * {
+ *     "delta": -1
+ * }
+ */
 router.patch(
     '/:id',
     celebrate({
