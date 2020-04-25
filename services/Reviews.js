@@ -83,7 +83,23 @@ class Reviews {
         originalDbReview.description = review.description;
         originalDbReview.score = review.score;
         originalDbReview.timeModified = new Date();
-        originalDbReview.save();
+        await originalDbReview.save();
+
+        return responseBuilder(true, {});
+    }
+
+    async patchHelfpulness(id, delta) {
+        const review = await this.db.Review.findById(id);
+
+        if (!review) {
+            return responseBuilder(false, {
+                message:
+                    'Original review does not exist, cannot patch.',
+            });
+        }
+
+        review.patchHelpfulness(delta);
+        await review.save();
 
         return responseBuilder(true, {});
     }

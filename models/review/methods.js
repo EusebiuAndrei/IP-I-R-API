@@ -8,6 +8,18 @@ const getObject = async function () {
     return reviewObject;
 };
 
+const patchHelpfulness = function (delta) {
+    const review = this;
+    if (!review.helpfulness) {
+        review.helpfulness = 0;
+    }
+    review.helpfulness += delta;
+    if (review.helpfulness === 0) {
+        review.delete('helpfulness');
+    }
+};
+
 module.exports = {
     getObject,
+    patchHelpfulness,
 };

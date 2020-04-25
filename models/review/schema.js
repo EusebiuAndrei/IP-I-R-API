@@ -35,6 +35,10 @@ const schema = mongoose.Schema({
         type: Date,
         required: true,
     },
+    helpfulness: {
+        type: Number,
+        required: false,
+    },
 });
 
 schema.index({ provider: 1, reviewer: 1 }, { unique: true });
