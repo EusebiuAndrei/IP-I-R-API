@@ -15,7 +15,7 @@ const patchHelpfulness = function (delta) {
     }
     review.helpfulness += delta;
     if (review.helpfulness === 0) {
-        review.delete('helpfulness');
+        review.helpfulness = undefined;
     }
 };
 
