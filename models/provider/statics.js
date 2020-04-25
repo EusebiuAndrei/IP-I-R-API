@@ -1,7 +1,9 @@
 const findByTags = async function (tags) {
-    return this.find({
-        tags: { $all: tags },
-    });
+    let filter = {};
+    if (tags.length) {
+        filter = {tags: { $all: tags }}
+    }
+    return this.find(filter);
 };
 
 module.exports = {

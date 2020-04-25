@@ -10,6 +10,6 @@ module.exports = async ({ expressApp }) => {
         await expressLoader(expressApp);
         debug('express loaded');
     } catch (error) {
-        debug('error');
+        debug(error);
     }
 };

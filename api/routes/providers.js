@@ -12,7 +12,12 @@ const router = Router();
  * "[ "cafe", "pizza" ]"
  */
 router.get('/', async (req, res) => {
-    const tags = req.body ? req.body : [];
+    let tags = req.query.tag;
+    if (!tags) {
+        tags = [];
+    } else if (!Array.isArray(tags)) {
+        tags = [ tags ];
+    }
     const result = await providers.getSome(tags);
     res.status(200).json(result);
 });
