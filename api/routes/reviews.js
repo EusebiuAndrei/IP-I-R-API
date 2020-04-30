@@ -86,7 +86,7 @@ router.put(
         const { id } = req.params;
         const result = await reviews.put(id, review);
 
-        const statusCode = result.success ? 200 : 400;
+        const statusCode = result.success ? 200 : 404;
 
         res.status(statusCode).json(result);
     },
