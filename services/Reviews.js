@@ -74,16 +74,6 @@ class Reviews {
                     'Original review does not exist, cannot edit.',
             });
         }
-        const originalReview = originalDbReview.toObject();
-        if (
-            originalReview.provider.toString() !==
-                review.providerId ||
-            originalReview.reviewer.toString() !== review.reviewerId
-        ) {
-            return responseBuilder(false, {
-                message: 'Cannot change review provider or reviewer.',
-            });
-        }
 
         originalDbReview.description = review.description;
         originalDbReview.score = review.score;

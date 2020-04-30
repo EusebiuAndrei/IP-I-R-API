@@ -1,6 +1,9 @@
 const { Router } = require('express');
 const { celebrate, Joi } = require('celebrate');
-const { getReviewsQueryParamsSchema } = require('../../schemas');
+const {
+    reviewPutSchema,
+    getReviewsQueryParamsSchema,
+} = require('../../schemas');
 
 const {
     helpfulnessPatchSchema,
@@ -73,7 +76,7 @@ router.post(
 router.put(
     '/:id',
     celebrate({
-        body: reviewValidationSchema,
+        body: reviewPutSchema,
         params: Joi.object().keys({
             id: objectIdSchema,
         }),
