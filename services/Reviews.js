@@ -24,6 +24,7 @@ class Reviews {
                 reviews.reduce(
                     (accumulator, review) =>
                         accumulator + review.score,
+                    0,
                 ) / reviews.length;
 
             return responseBuilder(true, {
