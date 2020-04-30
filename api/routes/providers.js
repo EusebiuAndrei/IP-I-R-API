@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
     if (!tags) {
         tags = [];
     } else if (!Array.isArray(tags)) {
-        tags = [ tags ];
+        tags = [tags];
     }
     const result = await providers.getSome(tags);
     res.status(200).json(result);
