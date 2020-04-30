@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { celebrate, Joi } = require('celebrate');
+const { getReviewsQueryParamsSchema } = require('../../schemas');
 
 const {
     helpfulnessPatchSchema,
@@ -24,14 +25,17 @@ const router = Router();
 router.get(
     '/',
     celebrate({
-        query: {
-            providerId: objectIdSchema.required(),
-        },
+        query: getReviewsQueryParamsSchema,
     }),
     async (req, res) => {
-        const { providerId } = req.query;
+        const { providerId, orderBy, skip, limit } = req.query;
 
-        const result = await reviews.getForProvider(providerId);
+        const result = await reviews.getForProvider(
+            providerId,
+            orderBy,
+            skip,
+            limit,
+        );
         const statusCode = result.success ? 200 : 404;
 
         res.status(statusCode).json(result);
@@ -86,7 +90,7 @@ router.put(
 );
 
 /**
- * Patch a posted review's helpfulness score, creating it if it's currently zero, and incrementing/decrementing it by delta.
+ * Patch a posted review's helpfulness score, incrementing/decrementing it by delta.
  *
  * Request body format:
  * {

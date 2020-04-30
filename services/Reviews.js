@@ -7,9 +7,12 @@ class Reviews {
         this.db = db;
     }
 
-    async getForProvider(providerId) {
+    async getForProvider(providerId, orderBy, skip, limit) {
         const dbReviews = await this.db.Review.getProviderReviews(
             providerId,
+            orderBy,
+            skip,
+            limit,
         );
 
         const reviews = await Promise.all(
@@ -41,6 +44,7 @@ class Reviews {
             description: review.description,
             timeCreated: new Date(),
             timeModified: new Date(),
+            helpfulness: 0,
         };
 
         try {

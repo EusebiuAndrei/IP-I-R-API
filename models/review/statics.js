@@ -13,10 +13,26 @@ const getProviderScore = async function (providerId) {
     return result.average;
 };
 
-const getProviderReviews = async function (providerId) {
-    return this.find({
+const getProviderReviews = async function (
+    providerId,
+    orderBy,
+    skip,
+    limit,
+) {
+    const query = this.find({
         provider: ObjectId(providerId),
     });
+    if (orderBy) {
+        query.sort(orderBy);
+    }
+    if (skip) {
+        query.skip(skip);
+    }
+    if (limit) {
+        query.limit(limit);
+    }
+
+    return query.exec();
 };
 
 module.exports = {
