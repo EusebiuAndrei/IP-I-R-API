@@ -159,7 +159,8 @@ A JSON object object containing the following field:
 -   404 - the review was not found
 
 ## /api/providers
-###This API route is deprecated. It will be removed when another module's API can take its role.
+
+#### This API route is deprecated. It will be removed when another module's API can take its role.
 
 **Usage examples**:
 - `GET .../api/providers/tag=cafe&tag=pizza` - returns a list of all providers with both "cafe" and "pizza" in their tag list.
