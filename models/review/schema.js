@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Provider = require('../provider');
-const User = require('../user');
+const Client = require('../user');
 
 const schema = mongoose.Schema({
     provider: {
@@ -11,7 +11,7 @@ const schema = mongoose.Schema({
     },
     reviewer: {
         type: mongoose.ObjectId,
-        ref: User,
+        ref: Client,
         required: true,
         unique: false,
     },
