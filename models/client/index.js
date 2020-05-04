@@ -1,4 +1,3 @@
-const autopopulate = require(`mongoose-autopopulate`);
 const mongoose = require('mongoose');
 const schema = require('./schema');
 
@@ -12,9 +11,6 @@ Object.assign(schema.methods, methods);
 Object.assign(schema.statics, statics);
 decorateWithHooks(schema);
 
-// Plugins here if you use one
-schema.plugin(autopopulate);
+const Client = mongoose.model('Client', schema);
 
-const User = mongoose.model('User', schema);
-
-module.exports = User;
+module.exports = Client;
