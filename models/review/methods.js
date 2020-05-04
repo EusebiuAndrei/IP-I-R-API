@@ -2,10 +2,13 @@ const getObject = async function () {
     const review = this;
     await review.populate('reviewer', 'avatar userId').execPopulate();
     await review.reviewer.populate('userId', 'name').execPopulate();
-    const reviewObject = this.toObject({ virtuals: true });
+    const reviewObject = this.toObject();
 
     delete reviewObject.provider;
-    reviewObject.reviewer.userId = reviewObject.reviewer.userId.name;
+    if (reviewObject.reviewer.userId.name) {
+        reviewObject.reviewer.name = review.reviewer.userId.name;
+    }
+    delete reviewObject.reviewer.userId;
     return reviewObject;
 };
 

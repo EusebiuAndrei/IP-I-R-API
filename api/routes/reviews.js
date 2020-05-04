@@ -3,9 +3,6 @@ const { celebrate, Joi } = require('celebrate');
 const {
     reviewPutSchema,
     getReviewsQueryParamsSchema,
-} = require('../../schemas');
-
-const {
     helpfulnessPatchSchema,
     objectIdSchema,
 } = require('../../schemas');
@@ -14,17 +11,6 @@ const { reviewValidationSchema } = require('../../models');
 
 const router = Router();
 
-/**
- * Get all reviews for the provider with the given ID, as well as their average score.
- *
- * Response data format:
- * {
- *     score: <1..10>
- *     reviews: [
- *         ...
- *     ]
- * }
- */
 router.get(
     '/',
     celebrate({
@@ -45,14 +31,6 @@ router.get(
     },
 );
 
-/**
- * Post a review; review schema detailed in /models/review/validator.
- *
- * Response data format:
- * {
- *      id: ...
- * }
- */
 router.post(
     '/',
     celebrate({
@@ -67,12 +45,6 @@ router.post(
     },
 );
 
-/**
- * Update a posted review, whose ID is given in the URL.
- * Review schema detailed in /models/review/validator.
- *
- * Response data on success is empty object.
- */
 router.put(
     '/:id',
     celebrate({
@@ -92,14 +64,6 @@ router.put(
     },
 );
 
-/**
- * Patch a posted review's helpfulness score, incrementing/decrementing it by delta.
- *
- * Request body format:
- * {
- *     "delta": -1
- * }
- */
 router.patch(
     '/:id',
     celebrate({

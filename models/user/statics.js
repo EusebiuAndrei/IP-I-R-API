@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
-const Logger = require('../../loaders/logger');
+// const Logger = require('../../loaders/logger');
 
 // Create functions that will represent schema statics
-const findByCredentials = async function(email, password) {
+const findByCredentials = async function (email, password) {
     const user = await this.findOne({ email });
 
     if (!user) {
@@ -22,7 +22,7 @@ const findByCredentials = async function(email, password) {
     return user;
 };
 
-const findByEmailToken = async function(emailToken) {
+const findByEmailToken = async function (emailToken) {
     const user = await this.findOne({ emailToken });
 
     if (!user) {
@@ -33,7 +33,7 @@ const findByEmailToken = async function(emailToken) {
     await user.save();
 };
 
-const findByEmail = async function(email) {
+const findByEmail = async function (email) {
     const user = await this.findOne({ email });
 
     if (!user) {
@@ -43,7 +43,7 @@ const findByEmail = async function(email) {
     return user;
 };
 
-const findByToken = async function(tokens) {
+const findByToken = async function (tokens) {
     const user = await this.findOne({ tokens });
 
     if (!user) {
